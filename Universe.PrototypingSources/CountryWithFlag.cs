@@ -49,39 +49,44 @@
             return StringComparer.OrdinalIgnoreCase.GetHashCode(Name);
         }
 
-
         private const string ResourceKey = "Universe.PrototypeSources.Wiki_Flags_Of_Countries";
         private static ResourceManager _ResMan;
         static readonly object _Sync = new object();
 
         static ResourceManager GetResMan()
         {
-#if NETCOREAPP1_0 || NETCOREAPP1_1 || NETCOREAPP2_0
-            Assembly a = typeof(CountryWithFlag).GetTypeInfo().Assembly;
-#elif NET20 || NET35 || NET40 
-            Assembly a = typeof(CountryWithFlag).Assembly;
-#else
-            Assembly a = typeof(CountryWithFlag).GetTypeInfo().Assembly;
-#endif
-
             lock (_Sync)
             {
                 if (_ResMan != null) return _ResMan;
-                foreach (string name in a.GetManifestResourceNames())
+                var assembly = GetAssemblyByType(typeof(CountryWithFlag));
+                foreach (string name in assembly.GetManifestResourceNames())
                 {
                     if (name.EndsWith(ResourceKey + ".resources"))
                     {
                         string baseName = name.Substring(0, name.Length - ".resources".Length);
-                        ResourceManager m = new ResourceManager(baseName, a);
+                        ResourceManager m = new ResourceManager(baseName, assembly);
                         _ResMan = m;
                         return _ResMan;
                     }
                 }
+
+                throw new InvalidOperationException(string.Format(
+                    "Embedded resource {0} was not found in each folder of Assembly {1}",
+                    ResourceKey, assembly.FullName));
             }
 
-            throw new InvalidOperationException(string.Format(
-                "Embedded resource {0} was not found in each folder of Assembly {1}",
-                ResourceKey, a.FullName));
+        }
+
+        static Assembly GetAssemblyByType(Type type)
+        {
+#if NETCOREAPP1_0 || NETCOREAPP1_1 || NETCOREAPP2_0
+            Assembly assembly = type.GetTypeInfo().Assembly;
+#elif NET20 || NET35 || NET40 
+            Assembly assembly = type.Assembly;
+#else
+            Assembly assembly = type.GetTypeInfo().Assembly;
+#endif
+            return assembly;
         }
     }
 }

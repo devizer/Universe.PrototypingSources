@@ -2,7 +2,7 @@ namespace Universe.PrototypingSources
 {
     public class Surname
     {
-        public string Value { get; set; }
+        public string FamilyName { get; set; }
         public HumanRace Race { get; set; }
         public int RankInRace { get; set; }
         public int RankInTotal { get; set; }
@@ -14,9 +14,9 @@ namespace Universe.PrototypingSources
         {
         }
 
-        public Surname(string value, HumanRace race, int rankInRace, int rankInTotal, int selfIdentifyingTotal, decimal selfIdentifyingPerCent, int totalOccurence)
+        public Surname(string familyName, HumanRace race, int rankInRace, int rankInTotal, int selfIdentifyingTotal, decimal selfIdentifyingPerCent, int totalOccurence)
         {
-            Value = value;
+            FamilyName = familyName;
             Race = race;
             RankInRace = rankInRace;
             RankInTotal = rankInTotal;
@@ -27,7 +27,7 @@ namespace Universe.PrototypingSources
 
         protected bool Equals(Surname other)
         {
-            return string.Equals(Value, other.Value);
+            return string.Equals(FamilyName, other.FamilyName);
         }
 
         public override bool Equals(object obj)
@@ -40,7 +40,7 @@ namespace Universe.PrototypingSources
 
         public override int GetHashCode()
         {
-            return (Value != null ? Value.GetHashCode() : 0);
+            return (FamilyName != null ? FamilyName.GetHashCode() : 0);
         }
     }
 
