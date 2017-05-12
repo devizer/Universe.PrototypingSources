@@ -1,5 +1,6 @@
 namespace Universe.PrototypingSources
 {
+    using System;
     using System.Collections.Generic;
 
     public class WorldRegion
@@ -20,7 +21,7 @@ namespace Universe.PrototypingSources
 
         public override string ToString()
         {
-            return $"{nameof(Id)}: {Id}, {nameof(IdParent)}: {IdParent}, {nameof(Name)}: {Name}";
+            return string.Format(@"Id: {0}, IdParent: {1}, Name: {2}", Id, IdParent, Name);
         }
 
         // For Internal use Only
@@ -29,6 +30,22 @@ namespace Universe.PrototypingSources
         // For Internal use Only
         public List<string> NotFoundCountryNames { get; set; }
 
+        protected bool Equals(WorldRegion other)
+        {
+            return string.Equals(Id, other.Id);
+        }
 
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((WorldRegion) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Id != null ? Id.GetHashCode() : 0);
+        }
     }
 }

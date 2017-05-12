@@ -6,15 +6,15 @@
     {
         static SourceOfWorldRegions()
         {
-            foreach (var worldRegion in WorldRegions)
+            foreach (WorldRegion worldRegion in WorldRegions)
             {
-                foreach (var parent in WorldRegions)
+                foreach (WorldRegion parent in WorldRegions)
                     if (parent.Id == worldRegion.Id)
                         worldRegion.Parent = parent;
 
                 worldRegion.CountriesWithFlag = new List<CountryWithFlag>();
                 worldRegion.NotFoundCountryNames = new List<string>();
-                foreach (var name in worldRegion.AllCountryNames)
+                foreach (string name in worldRegion.AllCountryNames)
                 {
                     var country = SourceOfCountriesWithFlags.GetCountryByName(name);
                     if (country != null)

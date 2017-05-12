@@ -21,7 +21,7 @@
         {
             get
             {
-                var ret = GetResMan().GetString(this.FlagKey);
+                string ret = GetResMan().GetString(this.FlagKey);
                 if (ret == null)
                     throw new InvalidOperationException(string.Format(
                         "It seems generated data is corrupter. Flag of {0} is not found in {1} by '{2}' key.",
@@ -56,7 +56,9 @@
 
         static ResourceManager GetResMan()
         {
-#if NET20 || NET35 || NET40 
+#if NETCOREAPP1_0 || NETCOREAPP1_1 || NETCOREAPP2_0
+            Assembly a = typeof(CountryWithFlag).GetTypeInfo().Assembly;
+#elif NET20 || NET35 || NET40 
             Assembly a = typeof(CountryWithFlag).Assembly;
 #else
             Assembly a = typeof(CountryWithFlag).GetTypeInfo().Assembly;
@@ -65,7 +67,7 @@
             lock (_Sync)
             {
                 if (_ResMan != null) return _ResMan;
-                foreach (var name in a.GetManifestResourceNames())
+                foreach (string name in a.GetManifestResourceNames())
                 {
                     if (name.EndsWith(ResourceKey + ".resources"))
                     {
