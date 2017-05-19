@@ -71,7 +71,7 @@
                 }
 
                 throw new InvalidOperationException(string.Format(
-                    "Embedded resource {0} was not found in each folder of Assembly {1}",
+                    "Embedded resource {0} was not found in any folder of Assembly {1}",
                     ResourceKey, assembly.FullName));
             }
 
@@ -90,3 +90,4 @@
         }
     }
 }
+
