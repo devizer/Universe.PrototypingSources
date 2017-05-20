@@ -71,11 +71,11 @@
                 indexes[level]++;
                 StringBuilder id = new StringBuilder();
                 for (int i = 0; i <= level; i++)
-                    id.Append('/').Append((char) (65 + (indexes[i] - 1) / 10)).Append((indexes[i] - 1) % 10);
+                    id.Append(Counter2Id(indexes[i]));
 
                 StringBuilder idParent = new StringBuilder();
                 for (int i = 0; i < level; i++)
-                    idParent.Append('/').Append((char)(65 + (indexes[i] - 1) / 10)).Append((indexes[i] - 1) % 10);
+                    idParent.Append(Counter2Id(indexes[i]));
 
                 Debug.WriteLine($"{id} ({level}): {copy}");
                 OrganizationInfo org = new OrganizationInfo();
@@ -115,8 +115,14 @@
             return ret;
         }
 
+        static string Counter2Id(int counter)
+        {
+            return "/" + ((char) (65 + (counter - 1) / 10)) + ((counter - 1) % 10);
+        }
 
-        // WARNING: relationships are defined by number of spaces before a name
+
+        // WARNING: Relationships are defined by number of spaces before a name
+        //          The supported numers are 0, 2, 4 and 8.
         private const string Raw = @"
 United Nations and agencies
   The UN six principal organs
