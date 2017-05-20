@@ -77,7 +77,7 @@
                 for (int i = 0; i < level; i++)
                     idParent.Append(Counter2Id(indexes[i]));
 
-                Debug.WriteLine($"{id} ({level}): {copy}");
+                Debug.WriteLine(string.Format("{0} ({1}): {2}", id, level, copy));
                 OrganizationInfo org = new OrganizationInfo();
                 org.Id = id.ToString();
                 org.IdParent = idParent.Length == 0 ? null : idParent.ToString();
