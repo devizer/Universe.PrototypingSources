@@ -455,7 +455,7 @@ Ideological and political groupings
   Alliance of Small Island States (AOSIS)
   Bolivarian Alliance for the Americas (ALBA)
   New Agenda Coalition
-  Non-Proliferation and Disarmament Initiative[2]
+  Non-Proliferation and Disarmament Initiative
   Western European and Others Group
 
 Other
